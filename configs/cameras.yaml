@@ -1,0 +1,8 @@
+site_id: "SITE_DEMO"
+device_id: "EDGE_DEMO_01"
+
+cameras:
+  - camera_id: "CAM_01"
+    name: "Demo Camera"
+    rtsp_url: "0"   # dev webcam placeholder for later
+    zones: ["Warehouse A"]
