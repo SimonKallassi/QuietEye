@@ -1,6 +1,9 @@
 import os
 from sqlalchemy import create_engine, text
 from sqlalchemy.engine import Engine
+from sqlalchemy.orm import sessionmaker
+
+from .models import Base
 
 def get_database_url() -> str:
     url = os.getenv("DATABASE_URL")
@@ -9,13 +12,17 @@ def get_database_url() -> str:
     return url
 
 def make_engine() -> Engine:
-    # future: add pooling config
     return create_engine(get_database_url(), pool_pre_ping=True)
 
 engine = make_engine()
+SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False)
+
+def init_db() -> None:
+    # MVP: create tables automatically.
+    # Later: replace with Alembic migrations.
+    Base.metadata.create_all(bind=engine)
 
 def db_ping() -> bool:
-    """Returns True if DB is reachable and responsive."""
     try:
         with engine.connect() as conn:
             conn.execute(text("SELECT 1"))
