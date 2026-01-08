@@ -1,0 +1,27 @@
+services:
+  db:
+    image: postgres:16
+    container_name: quieteye_db
+    environment:
+      POSTGRES_USER: quieteye
+      POSTGRES_PASSWORD: quieteye
+      POSTGRES_DB: quieteye
+    ports:
+      - "5432:5432"
+    volumes:
+      - quieteye_pgdata:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./backend
+    container_name: quieteye_backend
+    environment:
+      DATABASE_URL: postgresql+psycopg://quieteye:quieteye@db:5432/quieteye
+      QUIETEYE_ENV: dev
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+volumes:
+  quieteye_pgdata:
