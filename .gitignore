@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.env
+
+# Node / Next.js
+node_modules/
+.next/
+out/
+
+# Docker
+*.log
+
+# IDEs
+.idea/
+.vscode/
+
+# Local data
+snapshots/
+data/
